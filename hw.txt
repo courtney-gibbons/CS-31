@@ -1,0 +1,95 @@
+Courtney Gibbons
+705485300
+
+1.
+if cout doesn't have an endl or \n it will continue on the same line!
+prints:
+endlendl
+endline
+
+2.
+check both positive and negative inputs!
+
+If len = 3,
+i = 0 > j = 1 > " " > j = 2 > " " > "#"
+i = 1 > j = 2 > " " > "#"
+i = 2 > "#"
+prints:
+  #
+ #
+#
+
+If len = -2,
+returns 0.
+
+This program prints a diagonal line of hashtags equal to the number the user input and does not print anything if the user input a negative number.
+
+3.
+// check both positive and negative inputs!
+#include <iostream>
+using namespace std;
+
+
+int main()
+{
+    int len;
+
+    cout << "Enter a number: ";
+    cin >> len;
+
+    for (int i = 0; i < len; i++)
+    {
+        int j = i + 1;
+        while (j < len) {
+            cout << " ";
+            j = j + 1;
+        }
+        cout << "#" << endl;
+    }
+    return( 0 );
+}
+
+4.
+// check both positive and negative inputs!
+#include <iostream>
+using namespace std;
+
+
+int main()
+{
+    int len;
+    int i = 0;
+
+    cout << "Enter a number: ";
+    cin >> len;
+
+    if (len < 0) {
+        return(0);
+    }
+    
+    do {
+        int j = i + 1;
+        while (j < len) {
+            cout << " ";
+            j = j + 1;
+        }
+        cout << "#" << endl;
+        i = i + 1;
+    } while (i < len);
+    return( 0 );
+}
+
+5.
+    switch(weekday) {
+        case 1:
+            cout << "rainy days and mondays get me down";
+            break;
+        case 2:
+            cout << "ruby tuesday";
+            break;
+        case 6: case 7:
+            cout << "wonderful weekend";
+            break;
+        default:
+            cout << "regular day";
+    }
