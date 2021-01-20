@@ -1,0 +1,29 @@
+Courtney Gibbons
+705485300
+
+Step 5:
+In order to cause the program to produce incorrect results, I first tried having everyone vote for both parties.  I input 100 for the number of Electoral College electors, electors voting for the Republican Party, and electors voting for the Democratic Party, which of course, is impossible.  The output proclaimed that 100% of the 100 electors had voted for both the Republican Party and the Democratic Party, which does not make sense.  However, the program caught this mistake and also printed, "Looks like some of these data values don't make sense."  The computer did not report any error messages.
+
+I also tried having a number larger than the number of electors vote for a party.  I input 50 for the number of Electoral College electors, 40 for electors voting for the Republican Party, and 60 for electors voting for the Democratic Party.  The output proclaimed that 80% of the 50 electors had voted for the Republican Party and 120% for the Democratic Party, which is impossible.  Like last time, the program caught this mistake and also printed, "Looks like some of these data values don't make sense."  The computer did not report any error messages.
+
+In addition, I tried having negative voters.  I input -1 for the number of Electoral College electors, 0 for electors voting for the Republican Party, and 0 for electors voting for the Democratic Party.  The output proclaimed that 0% of the -1 electors had voted for the Republican Party and 0% for the Democratic Party, which is impossible.  Like the previous two times, the program caught this mistake and printed, "Looks like some of these data values don't make sense."  The computer did not report any error messages.
+
+Lastly, I tried having not everyone vote.  I input 50 for the number of Electoral College electors, 1 for electors voting for the Republican Party, and 1 for electors voting for the Democratic Party, meaning 48 people did not vote.  The output proclaimed that 2% of the 50 electors had voted for the Republican Party and 2% for the Democratic Party.  Seeing that not enough people voted, the program caught this mistake and also printed, "Looks like some of these data values don't make sense."  The computer did not report any error messages.
+
+Step 6:
+Logic Error #1: Instead of multiplying republicanVotes / totalVoters by 100.0, I multiplied it by 80.0.  This scales Republican votes to only 80%, not 100%, making Republican votes count less than Democratic votes.
+
+Logic Error #2: I switched the cout statements for the winning party.  So when pctRepub > pctDemoc, meaning the Republicans should win, the output displays: "Looks like the Democratic party candidate won!" and vice versa.
+
+Logic Error #3: Instead of outputting a nonsense warning when the sum of votes does not equal total votes, I changed != to ==, so a nonsense warning appears only if the sum of votes equal the total votes (ie: only if there's no nonsense).
+
+To test this, I input 100 for the number of Electoral College electors, 50 for the electors voting for the Republican Party, and 50 for the electors voting for the Democratic Party.  Republican votes were scaled to 80% (due to the first logic error) so the output said that only 40.0% of the 100 electors voted Republican while 50.0% voted Democratic.  Though the Democrats should have won by looking at percentage of votes, the output proclaimed, "Looks like the Republican party candidate won!"  Lastly, even though the sum of votes equals total votes, the output reported, "Looks like some of these data values don't make sense."  The compiler did not report any error messages.
+
+Step 7:
+Compile Error #1: I commented out #include <iostream>.  This led to one warning: "Using directive refers to implicitly-defined namespace 'std'" and many of the same two errors: "Use of undeclared identifier 'cin'" and "Use of undeclared identifier 'cout.'"  You need to #include <iostream> to use cin and cout.
+
+Compile Error #2: I removed the semicolon on line 13.  This led to one error on that line reading "Expected ';' after expression."
+
+Compile Error #3: I removed double before pctRepub, meaning I didn't assign a type to the variable pctRepub.  Every time pctRepub was referenced, I got the error message, "Use of undeclared identifier 'pctRepub.'"
+
+Compile Error #4: Thinking that this code was Python, not C++, I inserted a comment using a # instead of a //.  This led to an error on that line reading, "Invalid preprocessing directive."
