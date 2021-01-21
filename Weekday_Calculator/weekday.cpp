@@ -32,6 +32,7 @@ int main() {
         return(-1);
     }
     // if the day isn't between 1 and 31 (inclusive), invalid!
+    // did not check for invalid dates like February 31st
     if ((day < 1) || (day > 31)) {
         cout << "Invalid day!" << endl;
         return(-1);
