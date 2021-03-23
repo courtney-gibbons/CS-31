@@ -1,8 +1,3 @@
-//
-//  BeatThat.h
-//  BeatThat
-//
-
 #ifndef BeatThat_h
 #define BeatThat_h
 
