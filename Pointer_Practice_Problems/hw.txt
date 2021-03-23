@@ -1,7 +1,4 @@
-// Courtney Gibbons
-// 705485300
-
-1. // hard
+1.
 *p3 = S
 *p3 = T, p3 = 6940
 *p1 = S, p1 = 6940
@@ -21,7 +18,7 @@ char *ptr = &blocks[0];    // ptr will be assigned the value: 4434
 char temp;
 
 temp = blocks[0];          // temp will be assigned the value: A
-temp = *(blocks + 2);      // temp will be assigned the value: C // hard
+temp = *(blocks + 2);      // temp will be assigned the value: C
 temp = *(ptr + 1);         // temp will be assigned the value: B
 temp = *ptr;               // temp will be assigned the value: A
 
@@ -30,10 +27,10 @@ temp = *ptr;               // temp will be assigned the value: B
 temp = *(ptr + 1);         // temp will be assigned the value: C
 
 ptr = blocks;              // ptr will be assigned the value: 4434
-temp = *++ptr;             // temp will be assigned the value: B // hard - increments *ptr for the rest of the program
-temp = ++*ptr;             // temp will be assigned the value: C // hard - B incremented to C - stays for rest of program
-temp = *ptr++;             // temp will be assigned the value: C // hard - increments for next line
-temp = *ptr;               // temp will be assigned the value: C // hard - incrementation doesn't show bc nothing past C
+temp = *++ptr;             // temp will be assigned the value: B // increments *ptr for the rest of the program
+temp = ++*ptr;             // temp will be assigned the value: C // B incremented to C - stays for rest of program
+temp = *ptr++;             // temp will be assigned the value: C // increments for next line
+temp = *ptr;               // temp will be assigned the value: C
 
 5.
 int num[ 6 ] = { 0, 0, 0, 0, 0, 0 }; // [100, 90, 80, 70, 60, 0]
@@ -47,7 +44,7 @@ for (int i = 0; i <= 5; i++) {
 }
 cout << endl;
 
-6. // hard
+6.
 #import <iostream>
 #include <cctype>
 using namespace std;
