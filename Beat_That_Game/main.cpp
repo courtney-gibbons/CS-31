@@ -1,9 +1,3 @@
-//
-//  main.cpp
-//  BeatThat
-//
-//
-
 //#include <iostream>
 //#include <cassert>
 //#include "Die.h"
