@@ -1,6 +1,3 @@
-// Courtney Gibbons
-// 705485300
-
 #include <iostream>
 
 using namespace std;
