@@ -1,0 +1,242 @@
+Courtney Gibbons
+705485300
+
+Notable Obstacles:
+I was a little confused about some of the functions because I had difficulty understanding the spec.
+
+At first, I thought identicalValuesTogether should return true if at least 2 identical values are next to each other.  However, apparently this function should only return true if ALL identical values are next to each other.  After looking through the discussion board and checking my failures on Codeboard, I rewrote this function.
+
+I had difficulty rewriting identicalValuesTogether because of the possibility to have 3 or more duplicates in a row.  At first, I looped through counting how many total duplicates there were.  Then, I counted how many duplicates were next to each other and incremented by 1 each time I found one.  Here, I had the code check if there were 3 duplicates in a row.  It looked for 2 duplicates ahead, 2 behind, or 1 in front and 1 behind.  If it found 3 duplicates in a row, I had that increment by .5 instead to account for double counting.  Then, I compared total duplicates to the number of duplicates next to each other.  If there were more duplicates than duplicates next to each other, I returned false.  This worked well for 3 in a row but totally broke down once I tested 4 in a row.
+
+So, I rewrote identicalValuesTogether again!  I kept the same general premise, but instead of counting total duplicates, counting duplicates next to each other, and comparing these numbers, I used a Boolean variable.  In addition, instead of checking for two duplicates behind, two ahead, and one on either side, I did an even simpler, more general check.  I had a nested loop with i and j as counters, so I checked if i was either one above or one below j.  This works for just 2 duplicates in a row, 3 in a row, and even 4 or more in row!
+
+Then, more test cases were released.  My code treated "a", "a", "b", "a", "a" as true because technically each "a" has a duplicate next to it.  However, all duplicates of "a" must be together.  So, I did another, final rewrite!  This time, I did a nested loop and started the second one after the first one, ensuring that if there was a duplicate, there'd be one before it.  Then, I checked if for each duplicate there was another one right before.
+
+Similarly, I struggled to understand what hasTwoOrMoreDuplicates should return.  The spec said folks[8] = { "samwell", "jon", "margaery", "daenerys", "tyrion", "sansa", "magdalena", "jon" } should return true.  This only has 1 pair of duplicate values, meaning 2 duplicate values total.  So, I thought this was going by number of duplicates, not number of duplicate pairs.  Codeboard was a rude awakening.  After seeing what those test cases should've returned and looking at the discussion board, I was able to fix this function relatively easily.
+
+Test Data:
+    string folks[8] = { "samwell", "jon", "margaery", "daenerys", "tyrion", "sansa", "magdalena", "jon" };
+    string data[5] = { "mamaBbcca", "mamaBbcca", "12", "98.76", "tyrion" };
+    string string1[10] = { "AA", "BB", "BB", "BB", "cc", "dd", "ee", "ee", "0.1.0", "0.0" };
+    string string2[7] = { "55.", "4A", "35", "55.", "15.0", "15.0", "A12A" };
+    string string3[8] = { "55.", "4A", "35", "35", "35", "35", "A12A", "35" };
+    string string4[2] = { ",55.", "4A" };
+    string string5[2] = { "+55.", "4A" };
+    string string6[3] = { "-55.", "4A", ".55." };
+    string string7[3] = { ".", "", "55." };
+    string lecture1[8] = { "A", "B", "C", "D", "E", "F", "G", "H" };
+    string lecture2[4] = { "A", "Basdfads", "Casddasdf", "Casddasdf" };
+    string lecture3[5] = { "a", "a", "b", "c", "b" };
+    string lecture4[5] = { "a", "a", "b", "a", "a" };
+    string lecture5[4] = { "a", "a", "b", "b" };
+    string lecture6[5] = { "a", "a", "a", "c", "b" };
+    string lecture7[5] = { "a", "a", "a", "a", "b" };
+    string lecture8[5] = { "a", "a", "a", "a", "b" };
+    string lecture9[4] = { "AAA", "ABA", "ACAAA", "zzzzzA" };
+
+    // MAXIMUM
+    // 1 max
+    assert( locateMaximum( data, 5 ) == 4 );
+    assert( locateMaximum( lecture1, 4 ) == 3 );
+    assert( locateMaximum( lecture2, 4 ) == 2 );
+    // 2 max - return first max
+    assert( locateMaximum( string1, 8 ) == 6 );
+    // n < 0
+    assert( locateMaximum( string1, -8 ) == -1 );
+    // n = 0
+    assert( locateMaximum( lecture2, 0 ) == -1 );
+
+    // COUNT FLOATS
+    // multiple floats (no decimal and decimal)
+    assert( countFloatingPointValues( data, 5 ) == 2 );
+    assert( countFloatingPointValues( string2, 7 ) == 5 );
+    // multiple decimal points
+    assert( countFloatingPointValues( string1, 10 ) == 1 );
+    assert( countFloatingPointValues( string6, 3 ) == 0 );
+    // just decimal point "."
+    assert( countFloatingPointValues( string7, 3 ) == 2 );
+    // 0 floats
+    assert( countFloatingPointValues( data, 2 ) == 0 );
+    // commas
+    assert( countFloatingPointValues( string4, 2 ) == 0 );
+    // +
+    assert( countFloatingPointValues( string5, 2 ) == 0 );
+    // -
+    assert( countFloatingPointValues( string6, 2 ) == 0 );
+    // n < 0
+    assert( countFloatingPointValues( string6, -1 ) == -1 );
+    // n = 0
+    assert( countFloatingPointValues( string6, 0 ) == -1 );
+
+    // NO CAPS
+    // yes caps
+    assert( hasNoCapitals( data, 5 ) == false );
+    // yes caps in numbers
+    assert( hasNoCapitals( string2, 7 ) == false );
+    // no caps
+    assert( hasNoCapitals( folks, 8 ) == true );
+    // n < 0
+    assert( hasNoCapitals( folks, -8 ) == true );
+    // n = 0
+    assert( hasNoCapitals( folks, 0 ) == true );
+
+    // IDENTICAL VALUES TOGETHER
+    // no identical values
+    assert( identicalValuesTogether( folks, 6 ) == true );
+    // identical values but not together
+    assert( identicalValuesTogether( folks, 8 ) == false );
+    // some identical values together, others not
+    assert( identicalValuesTogether( string2, 7 ) == false );
+    assert( identicalValuesTogether( lecture3, 5 ) == false );
+    // some identical values together, others not AND they are the same char
+    assert( identicalValuesTogether( lecture4, 5 ) == false );
+    // all identical values together
+    assert( identicalValuesTogether( data, 5 ) == true );
+    // 3+ identical values in a row
+    assert( identicalValuesTogether( string1, 8 ) == true );
+    assert( identicalValuesTogether( string3, 7 ) == true );
+    // 3+ identical values in a row, other identicals not together
+    assert( identicalValuesTogether( string3, 8 ) == false );
+    // n < 0
+    assert( identicalValuesTogether( folks, -6 ) == false );
+    // n = 0
+    assert( identicalValuesTogether( folks, 0 ) == false );
+
+    // 2+ DUPLICATES
+    // 0 duplicates
+    assert( hasTwoOrMoreDuplicates( string6, 2 ) == false );
+    // 1 pair of duplicates
+    assert( hasTwoOrMoreDuplicates( folks, 8 ) == false );
+    // 2 pairs of duplicates
+    assert( hasTwoOrMoreDuplicates( string2, 7 ) == true );
+    assert( hasTwoOrMoreDuplicates( lecture3, 5 ) == true );
+    assert( hasTwoOrMoreDuplicates( lecture5, 4 ) == true );
+    // 3+ of the same (counts as 2+ duplicates)
+    assert( hasTwoOrMoreDuplicates( string1, 8 ) == true );
+    assert( hasTwoOrMoreDuplicates( string3, 8 ) == true );
+    assert( hasTwoOrMoreDuplicates( lecture4, 5 ) == true );
+    assert( hasTwoOrMoreDuplicates( lecture6, 5 ) == true );
+    assert( hasTwoOrMoreDuplicates( lecture7, 5 ) == true );
+    assert( hasTwoOrMoreDuplicates( lecture8, 5 ) == true );
+    // n < 0
+    assert( hasTwoOrMoreDuplicates( string6, -2 ) == false );
+    // n = 0
+    assert( hasTwoOrMoreDuplicates( string6, 0 ) == false );
+
+    // SHIFT LEFT
+    // amount < n
+    assert( shiftLeft( data, 5, 2, "foo" ) == 2 );
+    assert( data[0] == "12" );
+    assert( data[1] == "98.76" );
+    assert( data[2] == "tyrion" );
+    assert( data[3] == "foo" );
+    assert( data[4] == "foo" );
+    data[0] = "mamaBbcca";
+    data[1] = "mamaBbcca";
+    data[2] = "12";
+    data[3] = "98.76";
+    data[4] = "tyrion";
+    // amount < n, n < total length of array
+    assert( shiftLeft( data, 3, 2, "foo" ) == 2 );
+    assert( data[0] == "12" );
+    assert( data[1] == "foo" );
+    assert( data[2] == "foo" );
+    assert( data[3] == "98.76" );
+    assert( data[4] == "tyrion" );
+    data[0] = "mamaBbcca";
+    data[1] = "mamaBbcca";
+    data[2] = "12";
+    data[3] = "98.76";
+    data[4] = "tyrion";
+    // amount > n
+    assert( shiftLeft( data, 5, 10, "bar" ) == 5 );
+    assert( data[0] == "bar" );
+    assert( data[1] == "bar" );
+    assert( data[2] == "bar" );
+    assert( data[3] == "bar" );
+    assert( data[4] == "bar" );
+    data[0] = "mamaBbcca";
+    data[1] = "mamaBbcca";
+    data[2] = "12";
+    data[3] = "98.76";
+    data[4] = "tyrion";
+    // amount < 0
+    assert( shiftLeft( data, 5, -5, "foobar" ) == -1 );
+    assert( data[0] == "mamaBbcca" );
+    assert( data[1] == "mamaBbcca" );
+    assert( data[2] == "12" );
+    assert( data[3] == "98.76" );
+    assert( data[4] == "tyrion" );
+    // n < 0
+    assert( shiftLeft( data, -5, 5, "foobar" ) == -1 );
+    assert( data[0] == "mamaBbcca" );
+    assert( data[1] == "mamaBbcca" );
+    assert( data[2] == "12" );
+    assert( data[3] == "98.76" );
+    assert( data[4] == "tyrion" );
+    // n = 0
+    assert( shiftLeft( data, -5, 5, "foobar" ) == -1 );
+    assert( data[0] == "mamaBbcca" );
+    assert( data[1] == "mamaBbcca" );
+    assert( data[2] == "12" );
+    assert( data[3] == "98.76" );
+    assert( data[4] == "tyrion" );
+    // amount = 0
+    assert( shiftLeft( data, 5, 0, "foobar" ) == 0 );
+    assert( data[0] == "mamaBbcca" );
+    assert( data[1] == "mamaBbcca" );
+    assert( data[2] == "12" );
+    assert( data[3] == "98.76" );
+    assert( data[4] == "tyrion" );
+
+    // REPLACE FIRST AND LAST
+    // no char to find
+    assert( replaceFirstAndLastOccurrences( folks, 8, 'A', 'Z' ) == 0 );
+    // n < 0
+    assert( replaceFirstAndLastOccurrences( folks, -10, 'A', 'Z' ) == -1 );
+    // n = 0
+    assert( replaceFirstAndLastOccurrences( folks, 0, 'A', 'Z' ) == -1 );
+    // some strings have no char to find, others have 1, others have 2, others have 3+
+    assert( replaceFirstAndLastOccurrences( folks, 8, 'a', 'Z' ) == 8 );
+    assert( folks[0] == "sZmwell" );
+    assert( folks[1] == "jon" );
+    assert( folks[2] == "mZrgZery" );
+    assert( folks[3] == "dZenerys" );
+    assert( folks[4] == "tyrion" );
+    assert( folks[5] == "sZnsZ" );
+    assert( folks[6] == "mZgdalenZ" );
+    assert( folks[7] == "jon" );
+    folks[0] = "samwell";
+    folks[1] = "jon";
+    folks[2] = "margaery";
+    folks[3] = "daenerys";
+    folks[4] = "tyrion";
+    folks[5] = "sansa";
+    folks[6] = "magdalena";
+    folks[7] = "jon";
+    assert( replaceFirstAndLastOccurrences( lecture9, 4, 'A', 'z' ) == 7 );
+    assert( lecture9[0] == "zAz" );
+    assert( lecture9[1] == "zBz" );
+    assert( lecture9[2] == "zCAAz" );
+    assert( lecture9[3] == "zzzzzz" );
+    lecture9[0] = "AAA";
+    lecture9[1] = "ABA";
+    lecture9[2] = "ACAAA";
+    lecture9[3] = "zzzzzA";
+    // char to find = char to replace
+    assert( replaceFirstAndLastOccurrences( folks, 8, 'a', 'a' ) == 8 );
+    assert( folks[0] == "samwell" );
+    assert( folks[1] == "jon" );
+    assert( folks[2] == "margaery" );
+    assert( folks[3] == "daenerys" );
+    assert( folks[4] == "tyrion" );
+    assert( folks[5] == "sansa" );
+    assert( folks[6] == "magdalena" );
+    assert( folks[7] == "jon" );
+    assert( replaceFirstAndLastOccurrences( lecture9, 4, 'A', 'A' ) == 7 );
+    assert( lecture9[0] == "AAA" );
+    assert( lecture9[1] == "ABA" );
+    assert( lecture9[2] == "ACAAA" );
+    assert( lecture9[3] == "zzzzzA" );
+
+    cerr << "All tests succeeded" << endl;
