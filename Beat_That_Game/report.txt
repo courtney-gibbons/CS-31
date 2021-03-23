@@ -1,6 +1,3 @@
-// Courtney Gibbons
-// 705485300
-
 After I implemented all the // TODO: functions, I noticed my ending sequence wasn't working.  It was always saying that the game ended in a tie.  I went through my functions and drew a picture of what was calling what, and I found that my code was running in a circle.  In BeatThat, determineGameOutcome() was calling didHumanWin(), didComputerWin(), and isGameOver() from Board.  didHumanWin() and didComputerWin() were checking mGameOver, mHumanWon, and mComputerWon.  These were being updated by markTied(), markHumanAsWinner(), and markComputerAsWinner().  These were being set by determineGameOutcome() in BeatThat.  Thus, it was one giant circle looping back to determineGameOutcome() in BeatThat.
 
 To break the circle, I had determineGameOutcome() call isGameOver() and compare getRoundsWon() for the human player and the computer player.  It uses this to determine if the game is over, and if so, who's the winner.
