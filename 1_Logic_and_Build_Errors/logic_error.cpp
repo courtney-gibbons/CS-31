@@ -1,7 +1,3 @@
-// Courtney Gibbons
-// 705485300
-
-// Electoral College
 #include <iostream>
 using namespace std;   // pp. 37-38 in Savitch book explain this line
 
