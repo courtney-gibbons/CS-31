@@ -1,9 +1,3 @@
-//
-//  Player.h
-//  BeatThat
-//
-//
-
 #ifndef Player_h
 #define Player_h
 #include "Die.h"
