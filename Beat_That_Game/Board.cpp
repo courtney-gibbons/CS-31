@@ -1,10 +1,4 @@
-//
-//  Board.cpp
-//  BeatThat
-//
-
 #include "Board.h"
-
 
 namespace cs31
 {
