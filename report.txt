@@ -1,0 +1,149 @@
+Courtney Gibbons
+705485300
+
+My biggest challenge with this project was understanding what to do, instead of how to do it.
+
+I was really confused about what the balance was and throughout my code I was adding both miles and cost to it.  After failing a bunch of test cases, I looked back over my code and noticed that everything was being added balance.  I read the spec again and looked over all the test cases and realized that balance was only for miles and that we actually don't keep track of a master cost.
+
+I was also very confused about the last CodeBoard test.  At first, I thought adding a flight (+285 miles), adding another flight (+285 miles), asking for your free flight (-285 miles), then booking a final flight (+285), would yield 570 miles at the end, not 0.  However, what I didn't realize is that booking a flight with 0 miles right after calling free flight is your free flight.  This won't add any miles since it's your free flight.  It also won't subtract any miles because we already did that in the free flight function.  I guess I must have thought that free flight was booking that flight for you and that you didn't need to add a flight manually.  After reworking my code, I was getting 285 miles at the end.  I thought adding a flight (+285 miles), adding another flight (+285 miles), asking for your free flight (-285 miles), then booking your free flight (+0), would yield 285 miles, not 0, which is what CodeBoard wanted.  However, there ended up being an issue in the textbox in CodeBoard, and CodeBoard was actually checking what would happen if we added one flight (+285 miles), asked for a free flight (-285 miles), then booked our free flight (+0).  This, of course, yields 0 miles.
+
+Test cases:
+    // cost < 0 => cost = -1 (constructor + mutator)
+    PlaneFlight flight1( "Courtney", "SFO", "Aperture Science", -10.00, 1000 );
+    assert( flight1.getCost() == -1 );
+    PlaneFlight flight2( "Courtney", "Columbia", "Stardew Valley", 100.00, 1000 );
+    assert( to_string( flight2.getCost() ) == "100.000000" );
+    flight2.setCost( -100.00 );
+    assert( flight2.getCost() == -1 );
+    
+    // mileage < 0 => mileage = -1 (constructor + mutator)
+    PlaneFlight flight3( "Courtney", "Aperture Science", "Combine", 10.00, -1000 );
+    assert( flight3.getMileage() == -1 );
+    PlaneFlight flight4( "Courtney", "Germany", "Combine", 10.00, 1000 );
+    assert( to_string( flight4.getMileage() ) == "1000.000000" );
+    flight4.setMileage(-20);
+    assert( flight4.getMileage() == -1 );
+    
+    // empty from => ignored (constructor + mutator)
+    PlaneFlight flight5( "Courtney", "", "Combine", 10.00, 1000 );
+    assert( flight5.getFromCity() == "" ); // bc uninitialized strings are blank - ignoring it
+    PlaneFlight flight6( "Courtney", "Germany", "Combine", 10.00, 1000 );
+    assert( flight6.getFromCity() == "Germany" );
+    flight6.setFromCity( "" );
+    assert( flight6.getFromCity() == "Germany" );
+    
+    // empty to => ignored (constructor + mutator)
+    PlaneFlight flight7( "Courtney", "Arkansas", "", 10.00, 1000 );
+    assert( flight7.getToCity() == "" ); // bc uninitialized strings are blank - ignoring it
+    PlaneFlight flight8( "Courtney", "Germany", "Combine", 10.00, 1000 );
+    assert( flight8.getToCity() == "Combine" );
+    flight8.setToCity( "" );
+    assert( flight8.getToCity() == "Combine" );
+    
+    // to = from => ignored (constructor + mutator)
+    PlaneFlight flight9( "Courtney", "Arkansas", "Arkansas", 10.00, 1000 );
+    assert( flight9.getFromCity() == "" ); // bc uninitialized strings are blank - ignoring it
+    assert( flight9.getToCity() == "" ); // bc uninitialized strings are blank - ignoring it
+    PlaneFlight flight10( "Courtney", "Seattle", "Victoria", 10.00, 1000 );
+    assert( flight10.getFromCity() == "Seattle" );
+    assert( flight10.getToCity() == "Victoria" );
+    flight10.setToCity("Seattle");
+    assert( flight10.getFromCity() == "Seattle" );
+    assert( flight10.getToCity() == "Victoria" );
+    flight10.setFromCity("Victoria");
+    assert( flight10.getFromCity() == "Seattle" );
+    assert( flight10.getToCity() == "Victoria" );
+    
+    // empty name => ignored (constructor + mutator)
+    PlaneFlight flight11( "", "Alaska", "Michigan", 10.00, 1000 );
+    assert( flight11.getName() == "" ); // bc uninitialized strings are blank - ignoring it
+    PlaneFlight flight12( "Courtney", "Alaska", "Michigan", 10.00, 1000 );
+    assert( flight12.getName() == "Courtney" );
+    flight12.setName("");
+    assert( flight12.getName() == "Courtney" );
+    
+    // initial balance = 0
+    FrequentFlyerAccount courtney_account( "Courtney" );
+    assert( courtney_account.getBalance() == 0 );
+    
+    // add flight returns true when names match
+    PlaneFlight flight13( "Courtney", "SFO", "LAX", 10.00, 300 );
+    assert( courtney_account.addFlightToAccount( flight13 ) == true );
+    
+    // balance increases when adding flights to account
+    assert( to_string( courtney_account.getBalance() ) == "300.000000" );
+    
+    // add flight returns false when names don't match
+    PlaneFlight flight14( "Kim", "SFO", "LAX", 10.00, 200 );
+    assert( courtney_account.addFlightToAccount( flight14 ) == false );
+    
+    // balance doesn't change when add flight names don't match
+    assert( to_string( courtney_account.getBalance() ) == "300.000000" );
+    
+    // can earn free flight => true when enough balance
+    assert( courtney_account.canEarnFreeFlight( 300 ) == true );
+    
+    // can earn free flight => false when not enough balance
+    assert( courtney_account.canEarnFreeFlight( 500 ) == false );
+    
+    // check free flight objects => 0 cost
+    PlaneFlight flight15( "Courtney", "SFO", "LAX", 10.00, 100 );
+    courtney_account.freeFlight( "SFO", "LAX", 100, flight15 );
+    assert( flight15.getName() == "Courtney" );
+    assert( flight15.getFromCity() == "SFO" );
+    assert( flight15.getToCity() == "LAX" );
+    assert( flight15.getCost() == 0 );
+    assert( to_string( flight15.getMileage() ) == "100.000000" );
+    
+    // add flight fore a free flight returns true when names match
+    assert( courtney_account.addFlightToAccount( flight15 ) == true );
+    
+    // free flight reduces mileage
+    assert( to_string( courtney_account.getBalance() ) == "200.000000" );
+    
+    // free flight => true when enough balance
+    assert( courtney_account.freeFlight( "SFO", "LAX", 100, flight15 ) == true );
+    assert( to_string( courtney_account.getBalance() ) == "100.000000" );
+    
+    // free flight => true when balance decreases to 0
+    assert( courtney_account.freeFlight( "SFO", "LAX", 100, flight15 ) == true );
+    assert( to_string( courtney_account.getBalance() ) == "0.000000" );
+    
+    // free flight => false when not enough balance, doesn't affect balance
+    assert( courtney_account.freeFlight( "SFO", "LAX", 100, flight15 ) == false );
+    assert( to_string( courtney_account.getBalance() ) == "0.000000" );
+    
+    // set balance to 300 (since that last free flight brought us down to 0)
+    PlaneFlight flight16( "Courtney", "SFO", "LAX", 10.00, 300 );
+    courtney_account.addFlightToAccount( flight16 );
+    assert( to_string( courtney_account.getBalance() ) == "300.000000" );
+    
+    // adding your free flight doesnt affect mileage
+    PlaneFlight flight17( "Courtney", "SFO", "LAX", 10.00, 100 );
+    courtney_account.freeFlight( "SFO", "LAX", 100, flight17 );
+    assert( to_string( courtney_account.getBalance() ) == "200.000000" );
+    courtney_account.addFlightToAccount( flight17 );
+    assert( to_string( courtney_account.getBalance() ) == "200.000000" );
+    
+    // swapping to and from for our free flight (to = from at the start, we don't want this to be an error)
+    PlaneFlight flight18( "Courtney", "SFO", "SEA", 10.00, 100 );
+    assert( flight18.getName() == "Courtney" );
+    assert( flight18.getFromCity() == "SFO" );
+    assert( flight18.getToCity() == "SEA" );
+    assert( to_string( flight18.getCost() ) == "10.000000" );
+    assert( to_string( flight18.getMileage() ) == "100.000000" );
+    courtney_account.freeFlight( "SEA", "SFO", 100, flight18 );
+    assert( flight18.getName() == "Courtney" );
+    assert( flight18.getFromCity() == "SEA" );
+    assert( flight18.getToCity() == "SFO" );
+    assert( flight18.getCost() == 0 );
+    assert( to_string( flight18.getMileage() ) == "100.000000" );
+    courtney_account.addFlightToAccount( flight18 );
+    
+    // roundtrip flights (to = from at the start, we don't want this to be an error)
+    PlaneFlight flight19( "Courtney", "SFO", "SEA", 10.00, 100 );
+    courtney_account.addFlightToAccount( flight19 );
+    PlaneFlight flight20( "Courtney", "SEA", "SFO", 10.00, 100 );
+    courtney_account.addFlightToAccount( flight20 );
+    
+    cerr << "all tests passed!" << endl;
