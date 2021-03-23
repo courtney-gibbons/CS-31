@@ -1,11 +1,4 @@
-//
-//  RandomNumber.cpp
-//  BeatThat
-//
-//
-
 #include "RandomNumber.h"
-
 
 #include <random>
 #include <utility>
