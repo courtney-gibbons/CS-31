@@ -1,8 +1,3 @@
-//
-//  BeatThat.cpp
-//  BeatThat
-//
-
 #include "BeatThat.h"
 #include <iostream>
 using namespace std;
