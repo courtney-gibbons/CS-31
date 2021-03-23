@@ -1,9 +1,3 @@
-//
-//  RandomNumber.h
-//  BeatThat
-//
-//
-
 #ifndef RandomNumber_h
 #define RandomNumber_h
 
