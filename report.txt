@@ -1,0 +1,81 @@
+// Courtney Gibbons
+// 705485300
+
+Notable Obstacles:
+I ended up redoing this project 3 times.
+
+The first time, I wrote isValidResultString() relatively easily.  However, I did it in a terrible way.  There were 2 different paths for strings that had positive tests first and for strings that had negative tests first.  Basically, once I got the positive-first string checker working, I copy pasted that below for negative-first strings.  This added tons of unnecessary lines of code which made debugging more of of a struggle than it should've been.  My code wasn't catching strings with invalid lengths (ie: R2+, R2+1-, etc.).  Once I fixed this, I had to copy paste the updated versions over and over again below into the second path.  Then, I pasted this code (once again) into the other four functions.  I took out the unnecessary checks because once a string gets there, we already know it's passed isValidResultString.  Then, I added the counts for batches, positive tests, and negative tests.  However, every time I would run into a bug and fixed it, I had to copy paste the code 5 times!
+
+So, I rewrote isValidResultString() from scratch really quickly.  I already knew which bugs to look out for.  This time, I had positive-test-first strings and negative-test-first strings go through the same control path.  Once I got this working, I pasted it into the other 4 functions.
+
+However, I still wasn't satisfied with all this copy pasting.  I decided to write a new function, getInformation(), that calculates everything in one place.  Because functions can't return more than 1 value, I used pass by reference to change the value of the variables I put into that function.  Then I called this function in each of my other 5 functions and returned the variable I wanted.  Because everything's in one place, the code is simpler, easier to read, and easier to debug.
+
+Design of Program:
+Note: Based on the examples presented on CCLE, I assumed a valid string could only have one + and one - in each batch.  So, in my program, R5+2+1-2 would yield false.
+
+isValidResultString(), positiveTests(), negativeTests(), totalTests(), and batches() each initialize 5 variables that represent each function.  These are then passed by reference into getInformation().  Finally, I return the variable I want (after checking that isValidResultString is true).  For example, negativeTests() returns the variable negativeTests.
+
+getInformation() initializes strings and integers for total tests, positive tests, and negative tests in addition to the variables being passed by reference into the function.  The variables being passed by reference into the function are treated as total positive, total negative, and total total tests.  Every time we loop through the number of total, positive, or negative tests, it adds to the corresponding string.  Later, I convert these to integers by subtracting the ASCII value for '0'.  Then, I check that the integers positive + negative = total, add these to the total integers, and set the integers back to zero for the next batch.
+
+After initializing variables, getInformation() enters a while loop that makes sure the 0th character is an R and subtracts this.  It makes sure that the new 0th character isn't a 0 because we can't have 0 total tests, then it enters a for loop.  This loops, adding to total tests.  It also checks to make sure there's a digit before the + or -.  Once it finds a + or -, it removes everything up until the + or - (these will be used later).  We check for leading zeros and then enter another for loop.  This loops, counting positive tests or negative tests depending on if there was a + or - before.  Here, we check to make sure there's a digit between the +- or -+.  Once we find a + or -, we make sure it's following a - or + (respectively) and remove everything up until the latest + or -.  We make sure the string isn't empty except for this + or -, we check for leading 0s, and we enter a final for loop that checks for the end of the string or another R (which means another batch).  While it's looping, it adds to positive tests or negative tests depending on if there's a + or - at the start of the string.  It also checks that if it's not a + or -, it's a digit.  Once the string ends or it finds an R, we calculate the integer values for positive, negative, and total tests (as described above).  We add these to the total variables and then set the strings and integer values to 0 (as described above).  We set isValidResultString = 1 if the string ends here.  Or, if we have an R, we increment batches, remove everything from the string up until R, and break out.  For each of the outer loops, I told it to break if the 0th character is R, sending the string back to the outer while loop.
+
+Test Cases:
+Invalid Length:
+" " (space)
+R
+R2
+R2+
+R2-
+R2+1
+R2-1
+R2+1-
+R2-1+
+R2+1-1R
+R2-1+1R
+
+Skipping a Number:
+R+1-1
+R1+-1
+R1+1-
+
+++, --:
+R2+1+1
+R2-1-1
+
+0 Total Tests:
+R0+0-0
+
+0 Positive or Negative Tests:
+R2+0-2
+R2+2-0
+
+Leading 0s:
+R02+1-1
+R2+01-1
+R2+1-01
+R002+1-1
+
+Multiple Digits (True)
+R5000+4000-1000
+R52+32-20
+R63-60+3
+
+Multiple Digits (False)
+R5000+2000-1000
+R52+12-20
+R63-10+3
+
+Multiple Batches
+R3+2-1R70-67+3
+R2+1-1R2+1-1R2+1-1R2+1-1
+R37-0+37R1+1-0R12+8-4R13+5-8
+
+Positive + Negative ≠ Total:
+R3+2-3
+
+Not Starting with R:
+r1+0-1
+
+Extra Characters:
+R1+0-1hi
+"R1+0-1 " (extra space)
