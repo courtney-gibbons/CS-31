@@ -1,6 +1,3 @@
-// Code for Project 1
-
-// Electoral College
 //#include <iostream> //compile error #1: not including #include <iostream>
 using namespace std;   // pp. 37-38 in Savitch book explain this line
 
