@@ -1,8 +1,3 @@
-//
-//  Die.cpp
-//  BeatThat
-//
-
 #include "Die.h"
 #include <random>
 
