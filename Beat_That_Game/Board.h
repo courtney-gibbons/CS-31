@@ -1,8 +1,3 @@
-//
-//  Board.h
-//  BeatThat
-//
-
 #ifndef Board_h
 #define Board_h
 #include "Die.h"
