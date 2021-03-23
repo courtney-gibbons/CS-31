@@ -1,8 +1,3 @@
-//
-//  Die.h
-//  BeatThat
-//
-
 #ifndef Die_h
 #define Die_h
 
