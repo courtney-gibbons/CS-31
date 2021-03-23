@@ -1,6 +1,3 @@
-Courtney Gibbons
-705485300
-
 A.
 One obstacle I faced was having to write out all the months and code conversions over and over again.  I know Python decently well, and if I was coding this in Python, I would have set up a list of months and dictionaries for the month to month code, century to century code, and day code to day of the week conversions.  I then would have used loops to index and check those.  However, I don't know how to do that C++ (yet!).  So, I had to do a lot more copy pasting, which of course has the danger of leading to typos and mistakes.
 
