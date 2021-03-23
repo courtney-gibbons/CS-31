@@ -1,8 +1,3 @@
-//
-//  Player.cpp
-//  BeatThat
-//
-
 #include "Player.h"
 
 #include <iostream>
